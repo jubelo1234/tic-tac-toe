@@ -21,6 +21,9 @@ export default {
         "vcp": "inset 0 -8px 0 #cc8b13",
         "vpl": "inset 0 -8px 0 #118c87"
       },
+      screens: {
+        "exsm": "330px"
+      }
     },
   },
   plugins: [],
