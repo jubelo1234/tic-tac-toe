@@ -15,7 +15,12 @@ export default {
       },
       fontFamily: {
         sans: ["Outfit", "sans-serif"]
-      }
+      },
+      boxShadow: {
+        "pick": "inset 0 -8px 0 #10212a",
+        "vcp": "inset 0 -8px 0 #cc8b13",
+        "vpl": "inset 0 -8px 0 #118c87"
+      },
     },
   },
   plugins: [],
