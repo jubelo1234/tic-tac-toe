@@ -22,7 +22,8 @@ export default {
         "vpl": "inset 0 -8px 0 #118c87"
       },
       screens: {
-        "exsm": "330px"
+        "exsm": "330px",
+        'tab': '720px'
       }
     },
   },

@@ -6,7 +6,7 @@ import oBlack from "../assets/icon-o-dark.svg";
 
 export default function Home() {
   return (
-    <div className="w-full">
+    <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
       <div className="w-full flex items-center justify-center">
         <img src={logo} alt="logo" className="h-[2rem]" />
       </div>
@@ -30,9 +30,9 @@ export default function Home() {
           remember: x goes first
         </h4>
       </div>
-      <div className="w-full space-y-[1rem] mt-[2rem] ">
-        <button className="w-full shadow-vcp uppercase h-[3.5rem] text-center px-1 bg-light-yellow transition-all duration-300 hover:bg-light-yellow-hover text-[0.9rem] exsm:text-[1rem] font-bold text-dark-navy tracking-[1.25px] rounded-[0.9375rem] cursor-pointer"> new game (vs cpu)</button>
-        <button className="w-full shadow-vpl uppercase h-[3.5rem] text-center px-1 bg-silver-cl transition-all duration-300 hover:bg-silver-hover text-[0.9rem] exsm:text-[1rem] font-bold text-dark-navy tracking-[1.25px] rounded-[0.9375rem] cursor-pointer"> new game (vs player)</button>
+      <div className="w-full space-y-[1rem] tab:space-y-[1.25rem] mt-[2rem] tab:mt-[2.5rem] ">
+        <button className="w-full shadow-vcp uppercase h-[3.5rem] tab:h-[4.1875rem] text-center px-1 bg-light-yellow transition-all duration-300 hover:bg-light-yellow-hover text-[0.9rem] exsm:text-[1rem] tab:text-[20px] font-bold text-dark-navy tracking-[1.25px] rounded-[0.9375rem] cursor-pointer"> new game (vs cpu)</button>
+        <button className="w-full shadow-vpl uppercase h-[3.5rem] tab:h-[4.1875rem] text-center px-1 bg-silver-cl transition-all duration-300 hover:bg-silver-hover text-[0.9rem] exsm:text-[1rem] tab:text-[20px] font-bold text-dark-navy tracking-[1.25px] rounded-[0.9375rem] cursor-pointer"> new game (vs player)</button>
       </div>
     </div>
   );
