@@ -3,6 +3,7 @@ import xIcon from "../assets/icon-x.svg";
 import oIcon from "../assets/icon-o.svg";
 import resIcon from "../assets/icon-restart.svg";
 import Square from "./Square";
+import ScoreUi from "./ScoreUi";
 
 export default function GamePage() {
   return (
@@ -35,6 +36,11 @@ export default function GamePage() {
             <Square/>
             <Square/>
         </div>
+      </div>
+      <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem]">
+        <ScoreUi/>
+        <ScoreUi/>
+        <ScoreUi/>
       </div>
     </div>
   );
