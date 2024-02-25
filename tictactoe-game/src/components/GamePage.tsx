@@ -12,32 +12,32 @@ export default function GamePage() {
         <div className="w-fit flex items-center justify-center">
           <img src={logo} alt="logo" className="h-[2rem]" />
         </div>
-        <div className="flex justify-center items-center pb-[4px] gap-[0.8125rem] rounded-[0.625rem] h-[2.5rem] w-[6rem] bg-semi-dark-navy shadow-turn">
-          <img src={xIcon} alt="turns" className=" size-[16px]" />
+        <div className="flex justify-center items-center pb-[4px] gap-[0.8125rem] rounded-[0.625rem] h-[2.5rem] tab:h-[3.25rem] w-[6rem] tab:w-[8.75rem] bg-semi-dark-navy shadow-turn">
+          <img src={xIcon} alt="turns" className=" size-[16px] tab:size-[20px]" />
           <p className=" leading-none font-medium text-[0.875rem] uppercase text-silver-cl">Turn</p>
         </div>
-        <button className="size-[2.5rem] grid place-items-center cursor-pointer rounded-[10px] shadow-res bg-silver-cl">
-          <img src={resIcon} alt="restart" className="size-[16px]" />
+        <button className="size-[2.5rem] tab:size-[3.25rem] grid place-items-center cursor-pointer rounded-[10px] shadow-res bg-silver-cl">
+          <img src={resIcon} alt="restart" className="size-[16px] tab:size-[20px]" />
         </button>
       </div>
-      <div className="mt-10 space-y-[1.25rem]">
-        <div className="flex items-center justify-between gap-[3vw]">
+      <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
+        <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
             <Square/>
             <Square/>
             <Square/>
         </div>
-        <div className="flex items-center justify-between gap-[3vw]">
+        <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
             <Square/>
             <Square/>
             <Square/>
         </div>
-        <div className="flex items-center justify-between gap-[3vw]">
+        <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
             <Square/>
             <Square/>
             <Square/>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem]">
+      <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem] tab:gap-[15px]">
         <ScoreUi/>
         <ScoreUi/>
         <ScoreUi/>
