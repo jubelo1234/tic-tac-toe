@@ -27,6 +27,7 @@ export default {
       },
       screens: {
         exsm: "330px",
+        spec: "360px",
         tab: "720px",
       },
     },
