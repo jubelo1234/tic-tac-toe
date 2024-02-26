@@ -12,6 +12,7 @@ export default {
         "light-blue-hover": "#65E9E4",
         "light-yellow": "#F2B137",
         "light-yellow-hover": "#FFC860",
+        "win-bg": "rgba(0, 0, 0, .5)",
       },
       fontFamily: {
         sans: ["Outfit", "sans-serif"],
@@ -22,6 +23,7 @@ export default {
         vpl: "inset 0 -8px 0 #118c87",
         turn: "inset 0 -4px 0 #10212a",
         res: "inset 0 -4px 0 #6b8997",
+        nxt: "inset 0 -4px 0 #cc8b13"
       },
       screens: {
         exsm: "330px",
