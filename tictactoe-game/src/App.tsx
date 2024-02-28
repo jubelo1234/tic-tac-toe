@@ -10,7 +10,7 @@ function App() {
   const [homePage, setHomePage] = useState<boolean>(true);
   const [singlePlayerMode, setSinglePlayerMode] = useState<boolean>(false);
   const [player1, setPlayer1] = useState<string>("O");
-  const [modal, setModal] = useState<string | null>("tie");
+  const [modal, setModal] = useState<string | null>(null);
 
   return (
     <>

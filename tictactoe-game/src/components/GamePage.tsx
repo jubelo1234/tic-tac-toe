@@ -27,6 +27,8 @@ export default function GamePage() {
   const [currentPlayer, setCurrentPlayer] = useState<Player>('X');
   const [winner, setWinner] = useState<Player | 'Draw' | null>(null);
 
+
+
   return (
     <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
       <div className="flex justify-between items-center">
@@ -53,19 +55,19 @@ export default function GamePage() {
       </div>
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square />
-          <Square />
-          <Square />
+          <Square index={0} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+          <Square index={1} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+          <Square index={2} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square />
-          <Square />
-          <Square />
+        <Square index={3} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+        <Square index={4} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+        <Square index={5} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square />
-          <Square />
-          <Square />
+        <Square index={6} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+        <Square index={7} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+        <Square index={8} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
         </div>
       </div>
       <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem] tab:gap-[15px]">
