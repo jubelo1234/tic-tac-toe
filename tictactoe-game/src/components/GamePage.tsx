@@ -4,15 +4,28 @@ import oIcon from "../assets/icon-o.svg";
 import resIcon from "../assets/icon-restart.svg";
 import Square from "./Square";
 import ScoreUi from "./ScoreUi";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 
-export default function GamePage() {
+type GamePageProps = {
+  player1: string,
+  player2: string,
+  setPlayer1: React.Dispatch<React.SetStateAction<string>>,
+  setPlayer2: React.Dispatch<React.SetStateAction<string>>,
+  singlePlayer: boolean,
+}
+
+export default function GamePage({player1, player2, setPlayer1, setPlayer2, singlePlayer}: GamePageProps) {
   type Player = "X" | "O";
   type Board = Player | null;
 
-  type initialState = {
-    [ind]
-  }
+  type InitialState = {
+    [index: string]: number;
+  };
+
+  type Action =
+    | { type: "player1" }
+    | { type: "player2" }
+    | { type: "tie" };
 
   const winningCombos: number[][] = [
     [0, 1, 2],
@@ -27,13 +40,37 @@ export default function GamePage() {
 
   const initialBoard: Board[] = Array(9).fill(null);
 
+  const player1Title = `${singlePlayer ? player1 + ' (you)' : player1 + ' (P1)'}`;
+  const player2Title = `${singlePlayer ? player2 + ' (cpu)' : player2 + ' (P2)'}`;
+  const tieTitle = "tie";
+
+
   const [board, setBoard] = useState<Board[]>(initialBoard);
-  const [currentPlayer, setCurrentPlayer] = useState<Player>('X');
-  const [winner, setWinner] = useState<Player | 'Draw' | null>(null);
+  const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
+  const [winner, setWinner] = useState<Player | "Draw" | null>(null);
 
+  const initialState: initialState = {
+    player1Score: 0,
+    player2Score: 0,
+    tie: 0,
+    
+  };
 
+  const reducer = (state: InitialState, action: Action): InitialState => {
+    switch (action.type) {
+      case "player1":
+        return { ...state, player1Score: (state.player1Score += 1) };
+      case "player2":
+        return { ...state, player2Score: (state.player2Score += 1) };
+      case "tie":
+        return { ...state, tie: (state.tie += 1) };
 
+      default:
+        return state;
+    }
+  };
 
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
@@ -61,25 +98,79 @@ export default function GamePage() {
       </div>
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square index={0} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
-          <Square index={1} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
-          <Square index={2} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+          <Square
+            index={0}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
+          <Square
+            index={1}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
+          <Square
+            index={2}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-        <Square index={3} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
-        <Square index={4} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
-        <Square index={5} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+          <Square
+            index={3}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
+          <Square
+            index={4}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
+          <Square
+            index={5}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-        <Square index={6} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
-        <Square index={7} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
-        <Square index={8} board={board} setBoard={setBoard} curPlayer={currentPlayer} setCurPlayer={setCurrentPlayer} />
+          <Square
+            index={6}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
+          <Square
+            index={7}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
+          <Square
+            index={8}
+            board={board}
+            setBoard={setBoard}
+            curPlayer={currentPlayer}
+            setCurPlayer={setCurrentPlayer}
+          />
         </div>
       </div>
       <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem] tab:gap-[15px]">
-        <ScoreUi />
-        <ScoreUi />
-        <ScoreUi />
+        <ScoreUi player={player1} title={player1Title} score={state.player1Score} />
+        <ScoreUi player="tie" title={tieTitle} score={state.tie} />
+        <ScoreUi player={player2} title={player2Title} score={state.player2Score}/>
       </div>
     </div>
   );
