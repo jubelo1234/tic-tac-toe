@@ -4,17 +4,23 @@ import oIcon from "../assets/icon-o.svg";
 import resIcon from "../assets/icon-restart.svg";
 import Square from "./Square";
 import ScoreUi from "./ScoreUi";
-import { useReducer, useState } from "react";
+import { useReducer, useState, useEffect } from "react";
 
 type GamePageProps = {
-  player1: string,
-  player2: string,
-  setPlayer1: React.Dispatch<React.SetStateAction<string>>,
-  setPlayer2: React.Dispatch<React.SetStateAction<string>>,
-  singlePlayer: boolean,
-}
+  player1: string;
+  player2: string;
+  setPlayer1: React.Dispatch<React.SetStateAction<string>>;
+  setPlayer2: React.Dispatch<React.SetStateAction<string>>;
+  singlePlayer: boolean;
+};
 
-export default function GamePage({player1, player2, setPlayer1, setPlayer2, singlePlayer}: GamePageProps) {
+export default function GamePage({
+  player1,
+  player2,
+  setPlayer1,
+  setPlayer2,
+  singlePlayer,
+}: GamePageProps) {
   type Player = "X" | "O";
   type Board = Player | null;
 
@@ -22,10 +28,7 @@ export default function GamePage({player1, player2, setPlayer1, setPlayer2, sing
     [index: string]: number;
   };
 
-  type Action =
-    | { type: "player1" }
-    | { type: "player2" }
-    | { type: "tie" };
+  type Action = { type: "player1" } | { type: "player2" } | { type: "tie" };
 
   const winningCombos: number[][] = [
     [0, 1, 2],
@@ -40,10 +43,13 @@ export default function GamePage({player1, player2, setPlayer1, setPlayer2, sing
 
   const initialBoard: Board[] = Array(9).fill(null);
 
-  const player1Title = `${singlePlayer ? player1 + ' (you)' : player1 + ' (P1)'}`;
-  const player2Title = `${singlePlayer ? player2 + ' (cpu)' : player2 + ' (P2)'}`;
+  const player1Title = `${
+    singlePlayer ? player1 + " (you)" : player1 + " (P1)"
+  }`;
+  const player2Title = `${
+    singlePlayer ? player2 + " (cpu)" : player2 + " (P2)"
+  }`;
   const tieTitle = "tie";
-
 
   const [board, setBoard] = useState<Board[]>(initialBoard);
   const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
@@ -53,8 +59,37 @@ export default function GamePage({player1, player2, setPlayer1, setPlayer2, sing
     player1Score: 0,
     player2Score: 0,
     tie: 0,
-    
   };
+
+  useEffect(() => {
+    if (singlePlayer && currentPlayer === player2) {
+      setTimeout(() => makeAIMove(), 500);
+    }
+    function makeAIMove() {
+      const availableMoves = board
+        .map((cell, index) => (cell === null ? index : null))
+        .filter((cell) => cell !== null) as number[];
+  
+      const randomIndex = Math.floor(Math.random() * availableMoves.length);
+      handleCellClick(availableMoves[randomIndex]);
+    }
+    const handleCellClick = (index: number) => {
+      if (!board[index]) {
+        const newBoard = [...board];
+        newBoard[index] = currentPlayer;
+        setBoard(newBoard);
+        setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+        // const newWinner = checkWinner(newBoard);
+        // if (!newWinner) {
+        //   setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
+        // } else {
+        //   setWinner(newWinner);
+        // }
+      }
+    };
+  }, [currentPlayer, singlePlayer, player2, board]);
+
+
 
   const reducer = (state: InitialState, action: Action): InitialState => {
     switch (action.type) {
@@ -168,9 +203,17 @@ export default function GamePage({player1, player2, setPlayer1, setPlayer2, sing
         </div>
       </div>
       <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem] tab:gap-[15px]">
-        <ScoreUi player={player1} title={player1Title} score={state.player1Score} />
+        <ScoreUi
+          player={player1}
+          title={player1Title}
+          score={state.player1Score}
+        />
         <ScoreUi player="tie" title={tieTitle} score={state.tie} />
-        <ScoreUi player={player2} title={player2Title} score={state.player2Score}/>
+        <ScoreUi
+          player={player2}
+          title={player2Title}
+          score={state.player2Score}
+        />
       </div>
     </div>
   );
