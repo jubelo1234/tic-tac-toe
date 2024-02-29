@@ -37,7 +37,7 @@ export default function GamePage() {
         </div>
         <div className="flex justify-center items-center pb-[4px] gap-[0.8125rem] rounded-[0.625rem] h-[2.5rem] tab:h-[3.25rem] w-[6rem] tab:w-[8.75rem] bg-semi-dark-navy shadow-turn">
           <img
-            src={xIcon}
+            src={currentPlayer === "X" ? xIcon : oIcon}
             alt="turns"
             className=" size-[16px] tab:size-[20px]"
           />

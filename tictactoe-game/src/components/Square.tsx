@@ -3,12 +3,15 @@ import xIcon from "../assets/icon-x.svg";
 import oLine from "../assets/icon-o-outline.svg";
 import xLine from "../assets/icon-x-outline.svg";
 
+type Player = "X" | "O";
+type Board = Player | null;
+
 type squareProps = {
   index: number;
-  board: (null | string)[];
-  setBoard: React.Dispatch<React.SetStateAction<(null | string)[]>>;
+  board: Board[];
+  setBoard: React.Dispatch<React.SetStateAction<Board[]>>;
   curPlayer: "X" | "O";
-  setCurPlayer: React.Dispatch<React.SetStateAction<"X" | "O">>;
+  setCurPlayer: React.Dispatch<React.SetStateAction<Player>>;
 };
 
 export default function Square({
