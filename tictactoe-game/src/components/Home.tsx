@@ -41,7 +41,7 @@ export default function Home({ playerOne, setPage, singlePlayer }: homeProps) {
         setXImg(xBlack);
         setOImg(oSilver);
       }
-    }, 100);
+    }, 200);
 
     return () => clearTimeout(timeoutId);
   }, [playerMark]);

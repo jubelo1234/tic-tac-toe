@@ -10,6 +10,10 @@ export default function GamePage() {
   type Player = "X" | "O";
   type Board = Player | null;
 
+  type initialState = {
+    [ind]
+  }
+
   const winningCombos: number[][] = [
     [0, 1, 2],
     [3, 4, 5],
@@ -26,6 +30,8 @@ export default function GamePage() {
   const [board, setBoard] = useState<Board[]>(initialBoard);
   const [currentPlayer, setCurrentPlayer] = useState<Player>('X');
   const [winner, setWinner] = useState<Player | 'Draw' | null>(null);
+
+
 
 
 

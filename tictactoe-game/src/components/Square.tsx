@@ -21,16 +21,27 @@ export default function Square({
   curPlayer,
   setCurPlayer,
 }: squareProps) {
+  function handleClick(index: number) {
+    if (!board[index]) {
+      const newBoard = [...board];
+      newBoard[index] = curPlayer;
+      setBoard(newBoard);
+      setCurPlayer(curPlayer === "X" ? "O" : "X");
+    }
+  }
+
   return (
-    <div className=" group bg-semi-dark-navy grid place-items-center rounded-[15px] pb-2 shadow-pick cursor-pointer size-[26.5vw] tab:size-[140px]">
-      {board[index] && (
+    <div
+      onClick={() => handleClick(index)}
+      className=" group bg-semi-dark-navy grid place-items-center rounded-[15px] pb-2 shadow-pick cursor-pointer size-[26.5vw] tab:size-[140px]"
+    >
+      {board[index] ? (
         <img
           src={board[index] === "X" ? xIcon : oIcon}
           alt="x or o image"
           className=" size-[3.1rem] exsm:size-[4rem] "
         />
-      )}
-      {board[index] ?? (
+      ) : (
         <img
           src={curPlayer === "X" ? xLine : oLine}
           alt="x or o image"
