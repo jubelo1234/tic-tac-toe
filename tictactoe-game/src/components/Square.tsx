@@ -12,6 +12,8 @@ type squareProps = {
   setBoard: React.Dispatch<React.SetStateAction<Board[]>>;
   curPlayer: "X" | "O";
   setCurPlayer: React.Dispatch<React.SetStateAction<Player>>;
+  player1: string;
+  singlePlayer: boolean;
 };
 
 export default function Square({
@@ -20,13 +22,26 @@ export default function Square({
   setBoard,
   curPlayer,
   setCurPlayer,
+  player1,
+  singlePlayer,
 }: squareProps) {
   function handleClick(index: number) {
-    if (!board[index]) {
-      const newBoard = [...board];
-      newBoard[index] = curPlayer;
-      setBoard(newBoard);
-      setCurPlayer(curPlayer === "X" ? "O" : "X");
+    if (singlePlayer){
+      if (player1 === curPlayer && !board[index]){
+          const newBoard = [...board];
+          newBoard[index] = curPlayer;
+          setBoard(newBoard);
+          setCurPlayer(curPlayer === "X" ? "O" : "X");
+      } else {
+        return
+      }
+    } else {
+      if (!board[index]){
+        const newBoard = [...board];
+        newBoard[index] = curPlayer;
+        setBoard(newBoard);
+        setCurPlayer(curPlayer === "X" ? "O" : "X");
+    }
     }
   }
 

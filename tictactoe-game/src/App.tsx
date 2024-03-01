@@ -38,7 +38,7 @@ function App() {
       </div>
       {modal && (
         <div className="w-full absolute top-0 h-full">
-          {modal === "restart" && <RestartUi />}
+          {modal === "restart" && <RestartUi setModal={setModal}/>}
           {modal === "tie" && <TieCard />}
           {modal !== "restart" && modal !== "tie" && <WinCard />}
         </div>

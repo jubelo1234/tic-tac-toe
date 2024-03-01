@@ -71,7 +71,7 @@ export default function GamePage({
       const availableMoves = board
         .map((cell, index) => (cell === null ? index : null))
         .filter((cell) => cell !== null) as number[];
-  
+
       const randomIndex = Math.floor(Math.random() * availableMoves.length);
       handleCellClick(availableMoves[randomIndex]);
     }
@@ -91,8 +91,6 @@ export default function GamePage({
     };
   }, [currentPlayer, singlePlayer, player2, board]);
 
-
-
   const reducer = (state: InitialState, action: Action): InitialState => {
     switch (action.type) {
       case "player1":
@@ -109,8 +107,8 @@ export default function GamePage({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function handleRestartButton(){
-    setModal("restart")
+  function handleRestartButton() {
+    setModal("restart");
   }
 
   return (
@@ -129,7 +127,10 @@ export default function GamePage({
             Turn
           </p>
         </div>
-        <button onClick={handleRestartButton} className="size-[2.5rem] tab:size-[3.25rem] grid place-items-center cursor-pointer rounded-[10px] shadow-res bg-silver-cl">
+        <button
+          onClick={handleRestartButton}
+          className="size-[2.5rem] tab:size-[3.25rem] grid place-items-center cursor-pointer rounded-[10px] shadow-res bg-silver-cl"
+        >
           <img
             src={resIcon}
             alt="restart"
@@ -140,6 +141,8 @@ export default function GamePage({
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={0}
             board={board}
             setBoard={setBoard}
@@ -147,6 +150,8 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={1}
             board={board}
             setBoard={setBoard}
@@ -154,6 +159,8 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={2}
             board={board}
             setBoard={setBoard}
@@ -163,6 +170,8 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={3}
             board={board}
             setBoard={setBoard}
@@ -170,6 +179,8 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={4}
             board={board}
             setBoard={setBoard}
@@ -177,6 +188,8 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={5}
             board={board}
             setBoard={setBoard}
@@ -186,6 +199,8 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={6}
             board={board}
             setBoard={setBoard}
@@ -193,6 +208,8 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={7}
             board={board}
             setBoard={setBoard}
@@ -200,6 +217,8 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            player1={player1}
+            singlePlayer={singlePlayer}
             index={8}
             board={board}
             setBoard={setBoard}
