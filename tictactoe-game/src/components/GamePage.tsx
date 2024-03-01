@@ -12,6 +12,7 @@ type GamePageProps = {
   setPlayer1: React.Dispatch<React.SetStateAction<string>>;
   setPlayer2: React.Dispatch<React.SetStateAction<string>>;
   singlePlayer: boolean;
+  setModal: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export default function GamePage({
@@ -20,6 +21,7 @@ export default function GamePage({
   setPlayer1,
   setPlayer2,
   singlePlayer,
+  setModal,
 }: GamePageProps) {
   type Player = "X" | "O";
   type Board = Player | null;
@@ -107,6 +109,10 @@ export default function GamePage({
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  function handleRestartButton(){
+    setModal("restart")
+  }
+
   return (
     <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
       <div className="flex justify-between items-center">
@@ -123,7 +129,7 @@ export default function GamePage({
             Turn
           </p>
         </div>
-        <button className="size-[2.5rem] tab:size-[3.25rem] grid place-items-center cursor-pointer rounded-[10px] shadow-res bg-silver-cl">
+        <button onClick={handleRestartButton} className="size-[2.5rem] tab:size-[3.25rem] grid place-items-center cursor-pointer rounded-[10px] shadow-res bg-silver-cl">
           <img
             src={resIcon}
             alt="restart"

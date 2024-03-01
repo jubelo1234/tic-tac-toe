@@ -33,7 +33,7 @@ function App() {
             singlePlayer={setSinglePlayerMode}
           />
         ) : (
-          <GamePage player1={player1} player2={player2} setPlayer1={setPlayer1} setPlayer2={setPlayer2} singlePlayer={singlePlayerMode}/>
+          <GamePage player1={player1} player2={player2} setPlayer1={setPlayer1} setPlayer2={setPlayer2} singlePlayer={singlePlayerMode} setModal={setModal}/>
         )}
       </div>
       {modal && (
