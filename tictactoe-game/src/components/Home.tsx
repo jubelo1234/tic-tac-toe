@@ -9,9 +9,11 @@ type homeProps = {
   playerOne: React.Dispatch<React.SetStateAction<string>>;
   setPage: React.Dispatch<React.SetStateAction<boolean>>;
   singlePlayer: React.Dispatch<React.SetStateAction<boolean>>;
+  level: string;
+  setLevel: React.Dispatch<React.SetStateAction<string>>
 };
 
-export default function Home({ playerOne, setPage, singlePlayer }: homeProps) {
+export default function Home({ playerOne, setPage, singlePlayer, level, setLevel }: homeProps) {
   const [playerMark, setPlayerMark] = useState<string>("O");
 
   function handleSwitch(e: React.MouseEvent<HTMLButtonElement>): void {
@@ -27,6 +29,10 @@ export default function Home({ playerOne, setPage, singlePlayer }: homeProps) {
   function handleMultiPlayer(): void {
     setPage(false);
     singlePlayer(false);
+  }
+
+  function handleLevel(e: React.MouseEvent<HTMLButtonElement>): void{
+    setLevel(e.currentTarget.value);
   }
 
   const [xImg, setXImg] = useState(xSilver);
@@ -46,9 +52,6 @@ export default function Home({ playerOne, setPage, singlePlayer }: homeProps) {
     return () => clearTimeout(timeoutId);
   }, [playerMark]);
 
-
-
-
   return (
     <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
       <div className="w-full flex items-center justify-center">
@@ -58,7 +61,7 @@ export default function Home({ playerOne, setPage, singlePlayer }: homeProps) {
         <h2 className=" text-[0.9rem] exsm:text-[1rem] font-bold tracking-[1px] text-silver-cl">
           Pick player 1's mark
         </h2>
-        <div className="h-[4.5rem] relative  mt-[1.2rem] exsm:mt-[1.5rem] w-full flex items-center rounded-[0.625rem] bg-dark-navy justify-center">
+        <div className="h-[4.5rem] relative mt-[0.5rem] w-full flex items-center rounded-[0.625rem] bg-dark-navy justify-center">
           <button
             onClick={handleSwitch}
             value={"X"}
@@ -77,7 +80,32 @@ export default function Home({ playerOne, setPage, singlePlayer }: homeProps) {
             className={`bg-silver-cl transition-transform duration-500 ease-in-out z-0 top-1/2 transform -translate-y-1/2 ${
               playerMark === "O" ? "translate-x-[50%]" : "-translate-x-[50%]"
             } absolute rounded-[0.625rem] `}
-            style={{ width: "calc(50% - 0.5rem", height: "calc(100% - 1rem)"}}
+            style={{ width: "calc(50% - 0.5rem", height: "calc(100% - 1rem)" }}
+          ></div>
+        </div>
+        <h2 className=" text-[0.9rem] mt-[1rem] exsm:text-[1rem] font-bold tracking-[1px] text-silver-cl">
+          Difficulty Selection
+        </h2>
+        <div className="h-[4.5rem] relative  mt-[0.5rem] w-full flex items-center rounded-[0.625rem] bg-dark-navy justify-center">
+          <button
+            onClick={handleLevel}
+            value={"easy"}
+            className={` cursor-pointer font-extrabold text-[42px] transition-colors duration-500 ease-in-out relative z-10 w-1/2 flex ${level === "hard" ? " text-silver-cl": " text-dark-navy"} items-center justify-center`}
+          >
+            1
+          </button>
+          <button
+            onClick={handleLevel}
+            value={"hard"}
+            className={`w-1/2 cursor-pointer font-extrabold text-[42px] transition-colors duration-500 ease-in-out ${level === "easy" ? " text-silver-cl": " text-dark-navy"} relative z-10 flex items-center justify-center`}
+          >
+            2
+          </button>
+          <div
+            className={`bg-silver-cl transition-transform duration-500 ease-in-out z-0 top-1/2 transform -translate-y-1/2 ${
+              level === "hard" ? "translate-x-[50%]" : "-translate-x-[50%]"
+            } absolute rounded-[0.625rem] `}
+            style={{ width: "calc(50% - 0.5rem", height: "calc(100% - 1rem)" }}
           ></div>
         </div>
         <h4 className="mt-[1.0625rem] font-medium opacity-50 text-silver-cl text-[0.8rem] exsm:text-[0.875rem] tracking-[0.875px]">

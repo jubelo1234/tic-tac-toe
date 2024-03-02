@@ -12,6 +12,7 @@ function App() {
   const [player1, setPlayer1] = useState<string>("O");
   const [player2, setPlayer2] = useState<string>("X");
   const [modal, setModal] = useState<string | null>(null);
+  const [level, setLevel] = useState<string>("easy"); 
 
   useEffect(() => {
 
@@ -31,6 +32,8 @@ function App() {
             playerOne={setPlayer1}
             setPage={setHomePage}
             singlePlayer={setSinglePlayerMode}
+            level={level}
+            setLevel={setLevel}
           />
         ) : (
           <GamePage player1={player1} player2={player2} setPlayer1={setPlayer1} setPlayer2={setPlayer2} singlePlayer={singlePlayerMode} setModal={setModal}/>
