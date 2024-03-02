@@ -63,6 +63,63 @@ export default function GamePage({
     tie: 0,
   };
 
+  // cpu functionality
+//   const findBestMove = (board: Board[], player: Player): number => {
+//     let bestMove = -1;
+//     let bestScore = -Infinity;
+
+//     for (let i = 0; i < board.length; i++) {
+//         if (board[i] === null) {
+//             const newBoard = [...board];
+//             newBoard[i] = player;
+//             const score = minimax(newBoard, 0, false);
+//             if (score > bestScore) {
+//                 bestScore = score;
+//                 bestMove = i;
+//             }
+//         }
+//     }
+
+//     return bestMove;
+// };
+
+// const minimax = (board: Board[], depth: number, isMaximizing: boolean): number => {
+//     const result = checkWinner(board);
+//     if (result !== null) {
+//         if (result === 'O') {
+//             return 10 - depth;
+//         } else if (result === 'X') {
+//             return depth - 10;
+//         } else {
+//             return 0;
+//         }
+//     }
+
+//     if (isMaximizing) {
+//         let bestScore = -Infinity;
+//         for (let i = 0; i < board.length; i++) {
+//             if (board[i] === null) {
+//                 const newBoard = [...board];
+//                 newBoard[i] = 'O';
+//                 const score = minimax(newBoard, depth + 1, false);
+//                 bestScore = Math.max(bestScore, score);
+//             }
+//         }
+//         return bestScore;
+//     } else {
+//         let bestScore = Infinity;
+//         for (let i = 0; i < board.length; i++) {
+//             if (board[i] === null) {
+//                 const newBoard = [...board];
+//                 newBoard[i] = 'X';
+//                 const score = minimax(newBoard, depth + 1, true);
+//                 bestScore = Math.min(bestScore, score);
+//             }
+//         }
+//         return bestScore;
+//     }
+// };
+
   useEffect(() => {
     if (singlePlayer && currentPlayer === player2) {
       setTimeout(() => makeAIMove(), 500);
