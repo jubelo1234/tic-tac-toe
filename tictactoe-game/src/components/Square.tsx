@@ -14,6 +14,9 @@ type squareProps = {
   setCurPlayer: React.Dispatch<React.SetStateAction<Player>>;
   player1: string;
   singlePlayer: boolean;
+  winner: Player | "Draw" | null;
+  setWinner: React.Dispatch<React.SetStateAction<Player | "Draw" | null>>;
+  checkWinner: (board: Board[]) => Player | "Draw" | null
 };
 
 export default function Square({
@@ -24,24 +27,37 @@ export default function Square({
   setCurPlayer,
   player1,
   singlePlayer,
+  winner,
+  setWinner,
+  checkWinner,
 }: squareProps) {
   function handleClick(index: number) {
-    if (singlePlayer){
-      if (player1 === curPlayer && !board[index]){
-          const newBoard = [...board];
-          newBoard[index] = curPlayer;
-          setBoard(newBoard);
-          setCurPlayer(curPlayer === "X" ? "O" : "X");
-      } else {
-        return
-      }
-    } else {
-      if (!board[index]){
+    if (singlePlayer) {
+      if (player1 === curPlayer && !board[index] && !winner) {
         const newBoard = [...board];
         newBoard[index] = curPlayer;
         setBoard(newBoard);
-        setCurPlayer(curPlayer === "X" ? "O" : "X");
-    }
+        const newWinner = checkWinner(newBoard);
+        if (!newWinner) {
+          setCurPlayer(curPlayer === "X" ? "O" : "X");
+        } else {
+          setWinner(newWinner);
+        }
+      } else {
+        return;
+      }
+    } else {
+      if (!board[index] && !winner) {
+        const newBoard = [...board];
+        newBoard[index] = curPlayer;
+        setBoard(newBoard);
+        const newWinner = checkWinner(newBoard);
+        if (!newWinner) {
+          setCurPlayer(curPlayer === "X" ? "O" : "X");
+        } else {
+          setWinner(newWinner);
+        }
+      }
     }
   }
 
@@ -60,7 +76,7 @@ export default function Square({
         <img
           src={curPlayer === "X" ? xLine : oLine}
           alt="x or o image"
-          className=" hidden group-hover:block size-[3.1rem] exsm:size-[4rem] "
+          className=" hidden lg:group-hover:block size-[3.1rem] exsm:size-[4rem] "
         />
       )}
     </div>

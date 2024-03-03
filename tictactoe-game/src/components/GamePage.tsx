@@ -4,7 +4,7 @@ import oIcon from "../assets/icon-o.svg";
 import resIcon from "../assets/icon-restart.svg";
 import Square from "./Square";
 import ScoreUi from "./ScoreUi";
-import { useReducer, useState, useEffect } from "react";
+import { useReducer, useState, useEffect, useCallback } from "react";
 
 type GamePageProps = {
   player1: string;
@@ -32,17 +32,6 @@ export default function GamePage({
 
   type Action = { type: "player1" } | { type: "player2" } | { type: "tie" };
 
-  const winningCombos: number[][] = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
   const initialBoard: Board[] = Array(9).fill(null);
 
   const player1Title = `${
@@ -57,96 +46,125 @@ export default function GamePage({
   const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
   const [winner, setWinner] = useState<Player | "Draw" | null>(null);
 
-  const initialState: initialState = {
+  const initialState: InitialState = {
     player1Score: 0,
     player2Score: 0,
     tie: 0,
   };
 
   // cpu functionality
-//   const findBestMove = (board: Board[], player: Player): number => {
-//     let bestMove = -1;
-//     let bestScore = -Infinity;
+  //   const findBestMove = (board: Board[], player: Player): number => {
+  //     let bestMove = -1;
+  //     let bestScore = -Infinity;
 
-//     for (let i = 0; i < board.length; i++) {
-//         if (board[i] === null) {
-//             const newBoard = [...board];
-//             newBoard[i] = player;
-//             const score = minimax(newBoard, 0, false);
-//             if (score > bestScore) {
-//                 bestScore = score;
-//                 bestMove = i;
-//             }
-//         }
-//     }
+  //     for (let i = 0; i < board.length; i++) {
+  //         if (board[i] === null) {
+  //             const newBoard = [...board];
+  //             newBoard[i] = player;
+  //             const score = minimax(newBoard, 0, false);
+  //             if (score > bestScore) {
+  //                 bestScore = score;
+  //                 bestMove = i;
+  //             }
+  //         }
+  //     }
 
-//     return bestMove;
-// };
+  //     return bestMove;
+  // };
 
-// const minimax = (board: Board[], depth: number, isMaximizing: boolean): number => {
-//     const result = checkWinner(board);
-//     if (result !== null) {
-//         if (result === 'O') {
-//             return 10 - depth;
-//         } else if (result === 'X') {
-//             return depth - 10;
-//         } else {
-//             return 0;
-//         }
-//     }
+  // const minimax = (board: Board[], depth: number, isMaximizing: boolean): number => {
+  //     const result = checkWinner(board);
+  //     if (result !== null) {
+  //         if (result === 'O') {
+  //             return 10 - depth;
+  //         } else if (result === 'X') {
+  //             return depth - 10;
+  //         } else {
+  //             return 0;
+  //         }
+  //     }
 
-//     if (isMaximizing) {
-//         let bestScore = -Infinity;
-//         for (let i = 0; i < board.length; i++) {
-//             if (board[i] === null) {
-//                 const newBoard = [...board];
-//                 newBoard[i] = 'O';
-//                 const score = minimax(newBoard, depth + 1, false);
-//                 bestScore = Math.max(bestScore, score);
-//             }
-//         }
-//         return bestScore;
-//     } else {
-//         let bestScore = Infinity;
-//         for (let i = 0; i < board.length; i++) {
-//             if (board[i] === null) {
-//                 const newBoard = [...board];
-//                 newBoard[i] = 'X';
-//                 const score = minimax(newBoard, depth + 1, true);
-//                 bestScore = Math.min(bestScore, score);
-//             }
-//         }
-//         return bestScore;
-//     }
-// };
+  //     if (isMaximizing) {
+  //         let bestScore = -Infinity;
+  //         for (let i = 0; i < board.length; i++) {
+  //             if (board[i] === null) {
+  //                 const newBoard = [...board];
+  //                 newBoard[i] = 'O';
+  //                 const score = minimax(newBoard, depth + 1, false);
+  //                 bestScore = Math.max(bestScore, score);
+  //             }
+  //         }
+  //         return bestScore;
+  //     } else {
+  //         let bestScore = Infinity;
+  //         for (let i = 0; i < board.length; i++) {
+  //             if (board[i] === null) {
+  //                 const newBoard = [...board];
+  //                 newBoard[i] = 'X';
+  //                 const score = minimax(newBoard, depth + 1, true);
+  //                 bestScore = Math.min(bestScore, score);
+  //             }
+  //         }
+  //         return bestScore;
+  //     }
+  // };
 
-  useEffect(() => {
-    if (singlePlayer && currentPlayer === player2) {
-      setTimeout(() => makeAIMove(), 500);
+  const checkWinner = useCallback((board: Board[]): Player | "Draw" | null => {
+    const winningCombos: number[][] = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    for (const combo of winningCombos) {
+      const [a, b, c] = combo;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a] as Player;
+      }
     }
-    function makeAIMove() {
-      const availableMoves = board
-        .map((cell, index) => (cell === null ? index : null))
-        .filter((cell) => cell !== null) as number[];
+    if (!board.includes(null)) return "Draw";
+    return null;
+  }, []);
 
-      const randomIndex = Math.floor(Math.random() * availableMoves.length);
-      handleCellClick(availableMoves[randomIndex]);
-    }
-    const handleCellClick = (index: number) => {
-      if (!board[index]) {
+  const handleCellClick = useCallback(
+    (index: number) => {
+      if (!board[index] && !winner) {
         const newBoard = [...board];
         newBoard[index] = currentPlayer;
         setBoard(newBoard);
-        setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
-        // const newWinner = checkWinner(newBoard);
-        // if (!newWinner) {
-        //   setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
-        // } else {
-        //   setWinner(newWinner);
-        // }
+
+        const newWinner = checkWinner(newBoard);
+        if (!newWinner) {
+          setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+        } else {
+          setWinner(newWinner);
+        }
       }
-    };
-  }, [currentPlayer, singlePlayer, player2, board]);
+    },
+    [board, currentPlayer, setBoard, checkWinner, setWinner, winner]
+  );
+
+  const makeAIMove = useCallback(() => {
+    const availableMoves = board
+      .map((cell, index) => (cell === null ? index : null))
+      .filter((cell) => cell !== null) as number[];
+
+    const randomIndex = Math.floor(Math.random() * availableMoves.length);
+    handleCellClick(availableMoves[randomIndex]);
+  }, [board, handleCellClick]);
+
+  useEffect(() => {
+    if (singlePlayer && currentPlayer === player2 && !winner) {
+      setTimeout(() => makeAIMove(), 500);
+    }
+  }, [currentPlayer, singlePlayer, player2, winner, makeAIMove]);
+
+  console.log(winner);
 
   const reducer = (state: InitialState, action: Action): InitialState => {
     switch (action.type) {
@@ -198,6 +216,9 @@ export default function GamePage({
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={0}
@@ -207,6 +228,9 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={1}
@@ -216,6 +240,9 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={2}
@@ -227,6 +254,9 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={3}
@@ -236,6 +266,9 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={4}
@@ -245,6 +278,9 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={5}
@@ -256,6 +292,9 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={6}
@@ -265,6 +304,9 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={7}
@@ -274,6 +316,9 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winner={winner}
+            setWinner={setWinner}
+            checkWinner={checkWinner}
             player1={player1}
             singlePlayer={singlePlayer}
             index={8}
