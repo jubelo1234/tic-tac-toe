@@ -9,8 +9,8 @@ import TieCard from "./components/TieCard";
 function App() {
   const [homePage, setHomePage] = useState<boolean>(true);
   const [singlePlayerMode, setSinglePlayerMode] = useState<boolean>(false);
-  const [player1, setPlayer1] = useState<string>("O");
-  const [player2, setPlayer2] = useState<string>("X");
+  const [player1, setPlayer1] = useState<"X" | "O">("O");
+  const [player2, setPlayer2] = useState<"X" | "O">("X");
   const [modal, setModal] = useState<string | null>(null);
   const [level, setLevel] = useState<string>("easy"); 
 
@@ -36,7 +36,7 @@ function App() {
             setLevel={setLevel}
           />
         ) : (
-          <GamePage player1={player1} player2={player2} setPlayer1={setPlayer1} setPlayer2={setPlayer2} singlePlayer={singlePlayerMode} setModal={setModal}/>
+          <GamePage player1={player1} player2={player2} setPlayer1={setPlayer1} setPlayer2={setPlayer2} singlePlayer={singlePlayerMode} setModal={setModal} level={level}/>
         )}
       </div>
       {modal && (

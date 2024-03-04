@@ -6,7 +6,7 @@ import oBlack from "../assets/icon-o-dark.svg";
 import { useState, useEffect } from "react";
 
 type homeProps = {
-  playerOne: React.Dispatch<React.SetStateAction<string>>;
+  playerOne: React.Dispatch<React.SetStateAction<"X" | "O">>;
   setPage: React.Dispatch<React.SetStateAction<boolean>>;
   singlePlayer: React.Dispatch<React.SetStateAction<boolean>>;
   level: string;

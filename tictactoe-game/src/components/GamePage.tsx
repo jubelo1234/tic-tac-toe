@@ -7,12 +7,13 @@ import ScoreUi from "./ScoreUi";
 import { useReducer, useState, useEffect, useCallback } from "react";
 
 type GamePageProps = {
-  player1: string;
-  player2: string;
-  setPlayer1: React.Dispatch<React.SetStateAction<string>>;
-  setPlayer2: React.Dispatch<React.SetStateAction<string>>;
+  player1: "X" | "O";
+  player2: "X" | "O";
+  setPlayer1: React.Dispatch<React.SetStateAction<"X" | "O">>;
+  setPlayer2: React.Dispatch<React.SetStateAction<"X" | "O">>;
   singlePlayer: boolean;
   setModal: React.Dispatch<React.SetStateAction<string | null>>;
+  level: string;
 };
 
 export default function GamePage({
@@ -22,6 +23,7 @@ export default function GamePage({
   setPlayer2,
   singlePlayer,
   setModal,
+  level,
 }: GamePageProps) {
   type Player = "X" | "O";
   type Board = Player | null;
@@ -51,63 +53,6 @@ export default function GamePage({
     player2Score: 0,
     tie: 0,
   };
-
-  // cpu functionality
-  //   const findBestMove = (board: Board[], player: Player): number => {
-  //     let bestMove = -1;
-  //     let bestScore = -Infinity;
-
-  //     for (let i = 0; i < board.length; i++) {
-  //         if (board[i] === null) {
-  //             const newBoard = [...board];
-  //             newBoard[i] = player;
-  //             const score = minimax(newBoard, 0, false);
-  //             if (score > bestScore) {
-  //                 bestScore = score;
-  //                 bestMove = i;
-  //             }
-  //         }
-  //     }
-
-  //     return bestMove;
-  // };
-
-  // const minimax = (board: Board[], depth: number, isMaximizing: boolean): number => {
-  //     const result = checkWinner(board);
-  //     if (result !== null) {
-  //         if (result === 'O') {
-  //             return 10 - depth;
-  //         } else if (result === 'X') {
-  //             return depth - 10;
-  //         } else {
-  //             return 0;
-  //         }
-  //     }
-
-  //     if (isMaximizing) {
-  //         let bestScore = -Infinity;
-  //         for (let i = 0; i < board.length; i++) {
-  //             if (board[i] === null) {
-  //                 const newBoard = [...board];
-  //                 newBoard[i] = 'O';
-  //                 const score = minimax(newBoard, depth + 1, false);
-  //                 bestScore = Math.max(bestScore, score);
-  //             }
-  //         }
-  //         return bestScore;
-  //     } else {
-  //         let bestScore = Infinity;
-  //         for (let i = 0; i < board.length; i++) {
-  //             if (board[i] === null) {
-  //                 const newBoard = [...board];
-  //                 newBoard[i] = 'X';
-  //                 const score = minimax(newBoard, depth + 1, true);
-  //                 bestScore = Math.min(bestScore, score);
-  //             }
-  //         }
-  //         return bestScore;
-  //     }
-  // };
 
   const checkWinner = useCallback((board: Board[]): Player | "Draw" | null => {
     const winningCombos: number[][] = [
@@ -150,21 +95,101 @@ export default function GamePage({
   );
 
   const makeAIMove = useCallback(() => {
-    const availableMoves = board
-      .map((cell, index) => (cell === null ? index : null))
-      .filter((cell) => cell !== null) as number[];
+    // cpu functionality
 
-    const randomIndex = Math.floor(Math.random() * availableMoves.length);
-    handleCellClick(availableMoves[randomIndex]);
-  }, [board, handleCellClick]);
+    const cpuMove = (board: (Player | null)[]): number => {
+      const cpuSymbol: Player = player2;
+      const opponentSymbol: Player = player1;
+
+      // Function to check if a player has won
+      const hasPlayerWon = (player: Player): boolean => {
+        const winningCombos: number[][] = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8], // Rows
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8], // Columns
+          [0, 4, 8],
+          [2, 4, 6], // Diagonals
+        ];
+
+        return winningCombos.some(
+          ([a, b, c]) =>
+            board[a] === player && board[b] === player && board[c] === player
+        );
+      };
+
+      // Check for winning move for CPU
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          // Simulate placing the CPU symbol at the empty space
+          board[i] = cpuSymbol;
+          // Check if this move leads to a win for CPU
+          if (hasPlayerWon(cpuSymbol)) {
+            board[i] = null; // Reset the move
+            return i;
+          }
+          // Reset the move for further evaluation
+          board[i] = null;
+        }
+      }
+
+      // Check for blocking opponent's winning move
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          // Simulate placing the opponent's symbol at the empty space
+          board[i] = opponentSymbol;
+          // Check if this move blocks opponent's winning move
+          if (hasPlayerWon(opponentSymbol)) {
+            board[i] = null; // Reset the move
+            return i;
+          }
+          // Reset the move for further evaluation
+          board[i] = null;
+        }
+      }
+
+      // If no winning or blocking move, choose a random empty space
+      const emptySpaces: number[] = [];
+      for (let i = 0; i < board.length; i++) {
+        if (board[i] === null) {
+          emptySpaces.push(i);
+        }
+      }
+
+      // If there are no empty spaces left, return -1 to indicate no move available
+      if (emptySpaces.length === 0) {
+        return -1;
+      }
+
+      // Choose a random index from the available empty spaces
+      const randomIndex = Math.floor(Math.random() * emptySpaces.length);
+      return emptySpaces[randomIndex];
+    };
+
+    if (level === "easy") {
+      const availableMoves = board
+        .map((cell, index) => (cell === null ? index : null))
+        .filter((cell) => cell !== null) as number[];
+
+      const randomIndex = Math.floor(Math.random() * availableMoves.length);
+      handleCellClick(availableMoves[randomIndex]);
+    } else {
+      console.log(level);
+      const newBoard = [...board];
+      const moveIndex = cpuMove(newBoard);
+      if (moveIndex !== -1) {
+        handleCellClick(moveIndex);
+      }
+    }
+  }, [board, handleCellClick, level, player1, player2]);
 
   useEffect(() => {
     if (singlePlayer && currentPlayer === player2 && !winner) {
       setTimeout(() => makeAIMove(), 500);
     }
   }, [currentPlayer, singlePlayer, player2, winner, makeAIMove]);
-
-  console.log(winner);
 
   const reducer = (state: InitialState, action: Action): InitialState => {
     switch (action.type) {
