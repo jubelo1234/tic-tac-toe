@@ -47,6 +47,7 @@ export default function GamePage({
   const [board, setBoard] = useState<Board[]>(initialBoard);
   const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
   const [winner, setWinner] = useState<Player | "Draw" | null>(null);
+  const [winArray, setWinArray] = useState<number[] | null>(null);
 
   const initialState: InitialState = {
     player1Score: 0,
@@ -69,6 +70,7 @@ export default function GamePage({
     for (const combo of winningCombos) {
       const [a, b, c] = combo;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        setWinArray([a, b, c]);
         return board[a] as Player;
       }
     }
@@ -241,6 +243,7 @@ export default function GamePage({
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -253,6 +256,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -265,6 +269,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -279,6 +284,7 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -291,6 +297,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -303,6 +310,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -317,6 +325,7 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -329,6 +338,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
@@ -341,6 +351,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            winArray={winArray}
             winner={winner}
             setWinner={setWinner}
             checkWinner={checkWinner}
