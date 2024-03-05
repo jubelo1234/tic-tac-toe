@@ -20,6 +20,7 @@ type squareProps = {
   setWinner: React.Dispatch<React.SetStateAction<Player | "Draw" | null>>;
   checkWinner: (board: Board[]) => Player | "Draw" | null;
   winArray: number[] | null;
+  setScores: (winner: Player | "Draw") => void;
 };
 
 export default function Square({
@@ -34,6 +35,7 @@ export default function Square({
   setWinner,
   checkWinner,
   winArray,
+  setScores,
 }: squareProps) {
   function handleClick(index: number) {
     if (singlePlayer) {
@@ -46,6 +48,7 @@ export default function Square({
           setCurPlayer(curPlayer === "X" ? "O" : "X");
         } else {
           setWinner(newWinner);
+          setScores(newWinner);
         }
       } else {
         return;
@@ -60,6 +63,7 @@ export default function Square({
           setCurPlayer(curPlayer === "X" ? "O" : "X");
         } else {
           setWinner(newWinner);
+          setScores(newWinner);
         }
       }
     }

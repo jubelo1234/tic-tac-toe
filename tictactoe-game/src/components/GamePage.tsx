@@ -55,6 +55,22 @@ export default function GamePage({
     tie: 0,
   };
 
+  const reducer = (state: InitialState, action: Action): InitialState => {
+    switch (action.type) {
+      case "player1":
+        return { ...state, player1Score: state.player1Score + 1 };
+      case "player2":
+        return { ...state, player2Score: state.player2Score + 1 };
+      case "tie":
+        return { ...state, tie: state.tie + 1 };
+
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   const checkWinner = useCallback((board: Board[]): Player | "Draw" | null => {
     const winningCombos: number[][] = [
       [0, 1, 2],
@@ -78,6 +94,21 @@ export default function GamePage({
     return null;
   }, []);
 
+  const setScores = useCallback(
+    (winner: Player | "Draw") => {
+      if (winner) {
+        if (player1 === winner) {
+          dispatch({ type: "player1" });
+        } else if (player2 === winner) {
+          dispatch({ type: "player2" });
+        } else {
+          dispatch({ type: "tie" });
+        }
+      }
+    },
+    [player1, player2]
+  );
+
   const handleCellClick = useCallback(
     (index: number) => {
       if (!board[index] && !winner) {
@@ -90,10 +121,11 @@ export default function GamePage({
           setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
         } else {
           setWinner(newWinner);
+          setScores(newWinner);
         }
       }
     },
-    [board, currentPlayer, setBoard, checkWinner, setWinner, winner]
+    [board, currentPlayer, setBoard, checkWinner, setWinner, winner, setScores]
   );
 
   const makeAIMove = useCallback(() => {
@@ -193,22 +225,6 @@ export default function GamePage({
     }
   }, [currentPlayer, singlePlayer, player2, winner, makeAIMove]);
 
-  const reducer = (state: InitialState, action: Action): InitialState => {
-    switch (action.type) {
-      case "player1":
-        return { ...state, player1Score: (state.player1Score += 1) };
-      case "player2":
-        return { ...state, player2Score: (state.player2Score += 1) };
-      case "tie":
-        return { ...state, tie: (state.tie += 1) };
-
-      default:
-        return state;
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
   function handleRestartButton() {
     setModal("restart");
   }
@@ -243,6 +259,7 @@ export default function GamePage({
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -256,6 +273,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -269,6 +287,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -284,6 +303,7 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -297,6 +317,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -310,6 +331,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -325,6 +347,7 @@ export default function GamePage({
         </div>
         <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -338,6 +361,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
@@ -351,6 +375,7 @@ export default function GamePage({
             setCurPlayer={setCurrentPlayer}
           />
           <Square
+            setScores={setScores}
             winArray={winArray}
             winner={winner}
             setWinner={setWinner}
