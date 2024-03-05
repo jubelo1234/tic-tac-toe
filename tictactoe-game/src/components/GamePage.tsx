@@ -10,20 +10,22 @@ type GamePageProps = {
   player1: "X" | "O";
   player2: "X" | "O";
   setPlayer1: React.Dispatch<React.SetStateAction<"X" | "O">>;
-  setPlayer2: React.Dispatch<React.SetStateAction<"X" | "O">>;
   singlePlayer: boolean;
   setModal: React.Dispatch<React.SetStateAction<string | null>>;
   level: string;
+  winner: "X" | "O" | "Draw" | null;
+  setWinner: React.Dispatch<React.SetStateAction<"X" | "O" | "Draw" | null>>
 };
 
 export default function GamePage({
   player1,
   player2,
   setPlayer1,
-  setPlayer2,
   singlePlayer,
   setModal,
   level,
+  winner,
+  setWinner,
 }: GamePageProps) {
   type Player = "X" | "O";
   type Board = Player | null;
@@ -46,7 +48,7 @@ export default function GamePage({
 
   const [board, setBoard] = useState<Board[]>(initialBoard);
   const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
-  const [winner, setWinner] = useState<Player | "Draw" | null>(null);
+  
   const [winArray, setWinArray] = useState<number[] | null>(null);
 
   const initialState: InitialState = {
@@ -99,14 +101,24 @@ export default function GamePage({
       if (winner) {
         if (player1 === winner) {
           dispatch({ type: "player1" });
+          setTimeout(() => {
+            setModal("game")
+          }, 1000);
         } else if (player2 === winner) {
           dispatch({ type: "player2" });
+          setTimeout(() => {
+            setModal("game")
+          }, 1000);
         } else {
           dispatch({ type: "tie" });
+          setTimeout(() => {
+            setModal("tie")
+          }, 1000);
         }
+
       }
     },
-    [player1, player2]
+    [player1, player2, setModal]
   );
 
   const handleCellClick = useCallback(

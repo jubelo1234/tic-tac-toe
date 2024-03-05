@@ -1,16 +1,54 @@
 import xIcon from "../assets/icon-x.svg";
+import oIcon from "../assets/icon-o.svg";
 
-export default function WinCard() {
+type winCardProps = {
+  singlePlayer: boolean;
+  player1: "X" | "O";
+  player2: "X" | "O";
+  winner: "X" | "O" | "Draw" | null;
+};
+
+
+
+export default function WinCard({
+  singlePlayer,
+  player1,
+  player2,
+  winner,
+}: winCardProps) {
+
+  let message = "hello"
+  let player = "player"
+
+  if (singlePlayer){
+    if (player1 === winner){
+      message = "you won..."
+    } else{
+      message = "oh no, you lost..."
+    }
+  } else {
+    if (player1 === winner){
+      player = "Player 1 wins!"
+    } else {
+      player = "Player 2 wins!"
+    }
+  }
+
+
   return (
     <div className="size-full">
       <div className=" fixed z-0 top-0 bg-win-bg size-full"></div>
       <div className="z-10 fixed h-[16.625rem] flex flex-col justify-center items-center uppercase bg-semi-dark-navy w-full top-1/2 left-1/2  transform -translate-y-1/2 -translate-x-1/2">
         <h2 className="text-silver-cl text-[0.8rem] exsm:text-[0.875rem] tab:text-[1.01rem] tracking-[0.875px] leading-[1.125rem] font-bold">
-          player 2 wins!
+         {singlePlayer ? message : player}
         </h2>
         <div className="flex items-center h-[1.75rem] tab:h-[4rem] justify-center gap-4 exsm:gap-[1.5rem] mb-[1.5rem] mt-[1rem]">
-          <img src={xIcon} alt="winner" className=" size-[26px] exsm:size-[28px] tab:size-16" />
-          <p className=" text-[1.4rem] exsm:text-[1.5rem] tab:text-[2.5rem] leading-[1.875rem] tab:leading-[3.125rem] text-light-blue font-bold">
+          <img
+            src={winner === "X" ? xIcon : oIcon }
+            alt="winner"
+            className=" size-[26px] exsm:size-[28px] tab:size-16"
+          />
+          <p className={` text-[1.4rem] exsm:text-[1.5rem] tab:text-[2.5rem] leading-[1.875rem] tab:leading-[3.125rem] ${winner === "X" ? "text-light-blue" : " text-light-yellow"} font-bold`}>
             takes the round
           </p>
         </div>
