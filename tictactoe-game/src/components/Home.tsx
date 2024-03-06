@@ -11,15 +11,12 @@ type homeProps = {
   singlePlayer: React.Dispatch<React.SetStateAction<boolean>>;
   level: string;
   setLevel: React.Dispatch<React.SetStateAction<string>>
+  player1: "X" | "O";
 };
 
-export default function Home({ playerOne, setPage, singlePlayer, level, setLevel }: homeProps) {
-  const [playerMark, setPlayerMark] = useState<string>("O");
+export default function Home({ playerOne, setPage, singlePlayer, level, setLevel, player1 }: homeProps) {
 
-  function handleSwitch(e: React.MouseEvent<HTMLButtonElement>): void {
-    setPlayerMark(e.currentTarget.value);
-    playerOne(e.currentTarget.value);
-  }
+
 
   function handleSinglePlayer(): void {
     setPage(false);
@@ -40,7 +37,7 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (playerMark === "O") {
+      if (player1 === "O") {
         setXImg(xSilver);
         setOImg(oBlack);
       } else {
@@ -50,7 +47,7 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
     }, 200);
 
     return () => clearTimeout(timeoutId);
-  }, [playerMark]);
+  }, [player1]);
 
   return (
     <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
@@ -63,22 +60,20 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
         </h2>
         <div className="h-[4.5rem] relative mt-[0.5rem] w-full flex items-center rounded-[0.625rem] bg-dark-navy justify-center">
           <button
-            onClick={handleSwitch}
-            value={"X"}
+            onClick={() => playerOne("X")}
             className=" cursor-pointer relative z-10 w-1/2 flex items-center justify-center"
           >
             <img src={xImg} alt="option x" className=" size-[32px]" />
           </button>
           <button
-            onClick={handleSwitch}
-            value={"O"}
+            onClick={() => playerOne("O")}
             className="w-1/2 cursor-pointer relative z-10 flex items-center justify-center"
           >
             <img src={oImg} alt="option o" className=" size-[32px]" />
           </button>
           <div
             className={`bg-silver-cl transition-transform duration-500 ease-in-out z-0 top-1/2 transform -translate-y-1/2 ${
-              playerMark === "O" ? "translate-x-[50%]" : "-translate-x-[50%]"
+              player1 === "O" ? "translate-x-[50%]" : "-translate-x-[50%]"
             } absolute rounded-[0.625rem] `}
             style={{ width: "calc(50% - 0.5rem", height: "calc(100% - 1rem)" }}
           ></div>

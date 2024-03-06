@@ -1,9 +1,30 @@
+
+type Action =
+| { type: "player1" }
+| { type: "player2" }
+| { type: "tie" }
+| { type: "reset" };
+
+type Player = "X" | "O";
+type Board = Player | null;
+
 type restartUiTypes = {
   setModal: React.Dispatch<React.SetStateAction<string | null>>;
+  setBoard: React.Dispatch<React.SetStateAction<("X" | "O" | null)[]>>;
+  dispatch: React.Dispatch<Action>;
 }
 
-export default function RestartUi({setModal}: restartUiTypes) {
+
+export default function RestartUi({setModal, setBoard, dispatch}: restartUiTypes) {
   function handleCancel(){
+    setModal(null);
+  }
+
+  const initialBoard: Board[] = Array(9).fill(null);
+
+  function handleRestart() {
+    setBoard(initialBoard);
+    dispatch({ type: "reset" });
     setModal(null);
   }
 
@@ -18,7 +39,7 @@ export default function RestartUi({setModal}: restartUiTypes) {
           <button onClick={handleCancel} className="text-dark-navy w-[85vw] max-w-[272px] spec:max-w-[500px] spec:w-[158.20px] text-center cursor-pointer transition-all duration-300 hover:bg-silver-hover bg-silver-cl shadow-res font-bold text-[0.95rem] exsm:text-[1rem] uppercase rounded-[0.625rem] h-[3rem] exsm:h-[3.25rem] exsm:pb-1 px-3 exsm:px-4 tracking-[1px]">
             no, cancel
           </button>
-          <button className="text-dark-navy w-[85vw] max-w-[272px] spec:max-w-[500px] spec:w-[158.20px] text-center cursor-pointer transition-all duration-300 hover:bg-light-yellow-hover bg-light-yellow shadow-nxt font-bold text-[0.95rem] exsm:text-[1rem] uppercase rounded-[0.625rem] h-[3rem] exsm:h-[3.25rem] exsm:pb-1 px-3 exsm:px-4 tracking-[1px]">
+          <button onClick={handleRestart} className="text-dark-navy w-[85vw] max-w-[272px] spec:max-w-[500px] spec:w-[158.20px] text-center cursor-pointer transition-all duration-300 hover:bg-light-yellow-hover bg-light-yellow shadow-nxt font-bold text-[0.95rem] exsm:text-[1rem] uppercase rounded-[0.625rem] h-[3rem] exsm:h-[3.25rem] exsm:pb-1 px-3 exsm:px-4 tracking-[1px]">
            yes, restart
           </button>
         </div>

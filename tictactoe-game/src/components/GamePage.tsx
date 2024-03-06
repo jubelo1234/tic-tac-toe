@@ -4,39 +4,48 @@ import oIcon from "../assets/icon-o.svg";
 import resIcon from "../assets/icon-restart.svg";
 import Square from "./Square";
 import ScoreUi from "./ScoreUi";
-import { useReducer, useState, useEffect, useCallback } from "react";
+import {  useState, useEffect, useCallback } from "react";
+
+type InitialState = {
+  [index: string]: number;
+};
+
+type Action = { type: "player1" } | { type: "player2" } | { type: "tie" } | {type: "reset"};
+
 
 type GamePageProps = {
   player1: "X" | "O";
   player2: "X" | "O";
-  setPlayer1: React.Dispatch<React.SetStateAction<"X" | "O">>;
   singlePlayer: boolean;
   setModal: React.Dispatch<React.SetStateAction<string | null>>;
   level: string;
   winner: "X" | "O" | "Draw" | null;
   setWinner: React.Dispatch<React.SetStateAction<"X" | "O" | "Draw" | null>>
+  board: ("X" | "O" | null)[];
+  setBoard: React.Dispatch<React.SetStateAction<("X" | "O" | null)[]>>;
+  state: InitialState;
+  dispatch: React.Dispatch<Action>
 };
 
 export default function GamePage({
   player1,
   player2,
-  setPlayer1,
   singlePlayer,
   setModal,
   level,
   winner,
   setWinner,
+  board,
+  setBoard,
+  state,
+  dispatch,
 }: GamePageProps) {
   type Player = "X" | "O";
   type Board = Player | null;
 
-  type InitialState = {
-    [index: string]: number;
-  };
 
-  type Action = { type: "player1" } | { type: "player2" } | { type: "tie" };
 
-  const initialBoard: Board[] = Array(9).fill(null);
+
 
   const player1Title = `${
     singlePlayer ? player1 + " (you)" : player1 + " (P1)"
@@ -46,32 +55,11 @@ export default function GamePage({
   }`;
   const tieTitle = "tie";
 
-  const [board, setBoard] = useState<Board[]>(initialBoard);
+
   const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
   
   const [winArray, setWinArray] = useState<number[] | null>(null);
 
-  const initialState: InitialState = {
-    player1Score: 0,
-    player2Score: 0,
-    tie: 0,
-  };
-
-  const reducer = (state: InitialState, action: Action): InitialState => {
-    switch (action.type) {
-      case "player1":
-        return { ...state, player1Score: state.player1Score + 1 };
-      case "player2":
-        return { ...state, player2Score: state.player2Score + 1 };
-      case "tie":
-        return { ...state, tie: state.tie + 1 };
-
-      default:
-        return state;
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
 
   const checkWinner = useCallback((board: Board[]): Player | "Draw" | null => {
     const winningCombos: number[][] = [
@@ -118,7 +106,7 @@ export default function GamePage({
 
       }
     },
-    [player1, player2, setModal]
+    [player1, player2, setModal, dispatch]
   );
 
   const handleCellClick = useCallback(
