@@ -37,7 +37,6 @@ export default function Square({
   winArray,
   setScores,
 }: squareProps) {
-  console.log(winner);
   function handleClick(index: number) {
     if (singlePlayer) {
       if (player1 === curPlayer && !board[index] && !winner) {
@@ -50,6 +49,7 @@ export default function Square({
         } else {
           setWinner(newWinner);
           setScores(newWinner);
+          setCurPlayer("X");
         }
       } else {
         return;
@@ -65,6 +65,7 @@ export default function Square({
         } else {
           setWinner(newWinner);
           setScores(newWinner);
+          setCurPlayer("X");
         }
       }
     }
