@@ -4,14 +4,17 @@ import oIcon from "../assets/icon-o.svg";
 import resIcon from "../assets/icon-restart.svg";
 import Square from "./Square";
 import ScoreUi from "./ScoreUi";
-import {  useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 type InitialState = {
   [index: string]: number;
 };
 
-type Action = { type: "player1" } | { type: "player2" } | { type: "tie" } | {type: "reset"};
-
+type Action =
+  | { type: "player1" }
+  | { type: "player2" }
+  | { type: "tie" }
+  | { type: "reset" };
 
 type GamePageProps = {
   player1: "X" | "O";
@@ -20,11 +23,11 @@ type GamePageProps = {
   setModal: React.Dispatch<React.SetStateAction<string | null>>;
   level: string;
   winner: "X" | "O" | "Draw" | null;
-  setWinner: React.Dispatch<React.SetStateAction<"X" | "O" | "Draw" | null>>
+  setWinner: React.Dispatch<React.SetStateAction<"X" | "O" | "Draw" | null>>;
   board: ("X" | "O" | null)[];
   setBoard: React.Dispatch<React.SetStateAction<("X" | "O" | null)[]>>;
   state: InitialState;
-  dispatch: React.Dispatch<Action>
+  dispatch: React.Dispatch<Action>;
 };
 
 export default function GamePage({
@@ -43,10 +46,6 @@ export default function GamePage({
   type Player = "X" | "O";
   type Board = Player | null;
 
-
-
-
-
   const player1Title = `${
     singlePlayer ? player1 + " (you)" : player1 + " (P1)"
   }`;
@@ -55,11 +54,9 @@ export default function GamePage({
   }`;
   const tieTitle = "tie";
 
-
   const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
-  
-  const [winArray, setWinArray] = useState<number[] | null>(null);
 
+  const [winArray, setWinArray] = useState<number[] | null>(null);
 
   const checkWinner = useCallback((board: Board[]): Player | "Draw" | null => {
     const winningCombos: number[][] = [
@@ -90,20 +87,19 @@ export default function GamePage({
         if (player1 === winner) {
           dispatch({ type: "player1" });
           setTimeout(() => {
-            setModal("game")
+            setModal("game");
           }, 1000);
         } else if (player2 === winner) {
           dispatch({ type: "player2" });
           setTimeout(() => {
-            setModal("game")
+            setModal("game");
           }, 1000);
         } else {
           dispatch({ type: "tie" });
           setTimeout(() => {
-            setModal("tie")
+            setModal("tie");
           }, 1000);
         }
-
       }
     },
     [player1, player2, setModal, dispatch]
@@ -210,7 +206,6 @@ export default function GamePage({
       const randomIndex = Math.floor(Math.random() * availableMoves.length);
       handleCellClick(availableMoves[randomIndex]);
     } else {
-      console.log(level);
       const newBoard = [...board];
       const moveIndex = cpuMove(newBoard);
       if (moveIndex !== -1) {
@@ -221,7 +216,10 @@ export default function GamePage({
 
   useEffect(() => {
     if (singlePlayer && currentPlayer === player2 && !winner) {
-      setTimeout(() => makeAIMove(), 500);
+      setTimeout(() => {
+        makeAIMove();
+        console.log(player2);
+      }, 500);
     }
   }, [currentPlayer, singlePlayer, player2, winner, makeAIMove]);
 

@@ -37,6 +37,7 @@ export default function Square({
   winArray,
   setScores,
 }: squareProps) {
+  console.log(winner);
   function handleClick(index: number) {
     if (singlePlayer) {
       if (player1 === curPlayer && !board[index] && !winner) {
@@ -73,14 +74,14 @@ export default function Square({
     <div
       onClick={() => handleClick(index)}
       className={` group  grid place-items-center rounded-[15px] ${
-        winner && winArray?.includes(index)
+        winner && winArray?.includes(index) && winner !== "Draw"
           ? board[index] === "X"
             ? "bg-light-blue"
             : "bg-light-yellow"
           : "bg-semi-dark-navy"
       } pb-2 shadow-pick cursor-pointer size-[26.5vw] tab:size-[140px]`}
     >
-      {winner && winArray?.includes(index) ? (
+      {winner && winArray?.includes(index) && winner !== "Draw" ? (
         <img
           src={board[index] === "X" ? xdark : odark}
           alt="x or o image"

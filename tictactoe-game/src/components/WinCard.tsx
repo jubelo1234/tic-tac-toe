@@ -15,6 +15,7 @@ type winCardProps = {
   player1: "X" | "O";
   winner: "X" | "O" | "Draw" | null;
   setPlayer1: React.Dispatch<React.SetStateAction<"X" | "O">>;
+  setPlayer2: React.Dispatch<React.SetStateAction<"X" | "O">>;
   setBoard: React.Dispatch<React.SetStateAction<("X" | "O" | null)[]>>;
   dispatch: React.Dispatch<Action>;
   setLevel: React.Dispatch<React.SetStateAction<string>>;
@@ -33,7 +34,8 @@ export default function WinCard({
   setLevel,
   setHomePage,
   setModal,
-  setWinner
+  setWinner,
+  setPlayer2,
 }: winCardProps) {
   let message = "hello";
   let player = "player";
@@ -60,18 +62,20 @@ export default function WinCard({
     dispatch({ type: "reset" });
     setLevel("easy");
     setHomePage(true);
-    setWinner(null)
+    setWinner(null);
     setModal(null);
   }
 
   function handleNextRound() {
     if (player1 === "X") {
+      setPlayer2("X");
       setPlayer1("O");
     } else {
+      setPlayer2("O");
       setPlayer1("X");
     }
     setBoard(initialBoard);
-    setWinner(null)
+    setWinner(null);
     setModal(null);
   }
 

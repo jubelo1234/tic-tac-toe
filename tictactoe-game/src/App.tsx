@@ -46,7 +46,12 @@ function App() {
       case "tie":
         return { ...state, tie: state.tie + 1 };
       case "reset":
-        return { ...state, tie: state.tie = 0, player1Score: state.player1Score = 0, player2Score: state.player2Score = 0 };
+        return {
+          ...state,
+          tie: (state.tie = 0),
+          player1Score: (state.player1Score = 0),
+          player2Score: (state.player2Score = 0),
+        };
 
       default:
         return state;
@@ -93,7 +98,13 @@ function App() {
       </div>
       {modal && (
         <div className="w-full absolute top-0 h-full">
-          {modal === "restart" && <RestartUi setModal={setModal} setBoard={setBoard} dispatch={dispatch} />}
+          {modal === "restart" && (
+            <RestartUi
+              setModal={setModal}
+              setBoard={setBoard}
+              dispatch={dispatch}
+            />
+          )}
           {modal === "tie" && (
             <TieCard
               player1={player1}
@@ -104,10 +115,12 @@ function App() {
               setHomePage={setHomePage}
               setModal={setModal}
               setWinner={setWinner}
+              setPlayer2={setPlayer2}
             />
           )}
           {modal !== "restart" && modal !== "tie" && (
             <WinCard
+              setPlayer2={setPlayer2}
               singlePlayer={singlePlayerMode}
               player1={player1}
               winner={winner}

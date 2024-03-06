@@ -10,6 +10,7 @@ type Board = Player | null;
 type TieCardProps = {
   player1: "X" | "O";
   setPlayer1: React.Dispatch<React.SetStateAction<"X" | "O">>;
+  setPlayer2: React.Dispatch<React.SetStateAction<"X" | "O">>;
   setBoard: React.Dispatch<React.SetStateAction<("X" | "O" | null)[]>>;
   dispatch: React.Dispatch<Action>;
   setLevel: React.Dispatch<React.SetStateAction<string>>;
@@ -27,6 +28,7 @@ export default function TieCard({
   setHomePage,
   setModal,
   setWinner,
+  setPlayer2,
 }: TieCardProps) {
   const initialBoard: Board[] = Array(9).fill(null);
 
@@ -42,8 +44,10 @@ export default function TieCard({
 
   function handleNextRound() {
     if (player1 === "X") {
+      setPlayer2("X");
       setPlayer1("O");
     } else {
+      setPlayer2("O");
       setPlayer1("X");
     }
     setBoard(initialBoard);
