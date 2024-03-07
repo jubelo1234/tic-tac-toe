@@ -218,7 +218,6 @@ export default function GamePage({
     if (singlePlayer && currentPlayer === player2 && !winner) {
       setTimeout(() => {
         makeAIMove();
-        console.log(player2);
       }, 500);
     }
   }, [currentPlayer, singlePlayer, player2, winner, makeAIMove]);
