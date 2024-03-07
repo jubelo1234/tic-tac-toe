@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import RestartUi from "./components/RestartUi";
 import WinCard from "./components/WinCard";
 import TieCard from "./components/TieCard";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 
 function App() {
   type Player = "X" | "O";
@@ -68,33 +69,96 @@ function App() {
     }
   }, [player1]);
 
+  const homeVariants: Variants = {
+    initial: {
+      opacity: 0,
+      y: "50%",
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        ease: "easeInOut",
+        duration: 1.2,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -100,
+      transition: {
+        ease: "easeOut",
+        duration: 1,
+      },
+    },
+  };
+
+  const gamePageVariants: Variants = {
+    initial: {
+      opacity: 0,
+      y: 100,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        ease: "easeInOut",
+        duration: 1,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        ease: "easeOut",
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
     <>
       <div className="px-[6vw] py-10 flex items-center justify-center bg-dark-navy min-h-screen min-w-screen">
-        {homePage ? (
-          <Home
-            playerOne={setPlayer1}
-            setPage={setHomePage}
-            singlePlayer={setSinglePlayerMode}
-            level={level}
-            setLevel={setLevel}
-            player1={player1}
-          />
-        ) : (
-          <GamePage
-            state={state}
-            dispatch={dispatch}
-            board={board}
-            setBoard={setBoard}
-            winner={winner}
-            setWinner={setWinner}
-            player1={player1}
-            player2={player2}
-            singlePlayer={singlePlayerMode}
-            setModal={setModal}
-            level={level}
-          />
-        )}
+        <AnimatePresence mode="wait">
+          {homePage ? (
+            <motion.div
+              key="hello"
+              variants={homeVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <Home
+                playerOne={setPlayer1}
+                setPage={setHomePage}
+                singlePlayer={setSinglePlayerMode}
+                level={level}
+                setLevel={setLevel}
+                player1={player1}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="game"
+              variants={gamePageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <GamePage
+                state={state}
+                dispatch={dispatch}
+                board={board}
+                setBoard={setBoard}
+                winner={winner}
+                setWinner={setWinner}
+                player1={player1}
+                player2={player2}
+                singlePlayer={singlePlayerMode}
+                setModal={setModal}
+                level={level}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       {modal && (
         <div className="w-full absolute top-0 h-full">

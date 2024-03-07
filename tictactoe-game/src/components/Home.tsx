@@ -4,6 +4,7 @@ import xBlack from "../assets/icon-x-dark.svg";
 import oSilver from "../assets/icon-o-silver.svg";
 import oBlack from "../assets/icon-o-dark.svg";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 type homeProps = {
   playerOne: React.Dispatch<React.SetStateAction<"X" | "O">>;
@@ -49,8 +50,10 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
     return () => clearTimeout(timeoutId);
   }, [player1]);
 
+
+
   return (
-    <div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
+    <motion.div  className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
       <div className="w-full flex items-center justify-center">
         <img src={logo} alt="logo" className="h-[2rem]" />
       </div>
@@ -123,6 +126,6 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
           new game (vs player)
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
