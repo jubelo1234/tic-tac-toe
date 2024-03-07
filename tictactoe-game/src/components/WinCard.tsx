@@ -81,7 +81,7 @@ export default function WinCard({
 
   return (
     <div className="size-full">
-      <div className=" fixed z-0 top-0 bg-win-bg size-full"></div>
+      <div className=" fixed z-0 transition-all duration-300 ease-in top-0 bg-win-bg size-full"></div>
       <div className="z-10 fixed h-[16.625rem] flex flex-col justify-center items-center uppercase bg-semi-dark-navy w-full top-1/2 left-1/2  transform -translate-y-1/2 -translate-x-1/2">
         <h2 className="text-silver-cl text-[0.8rem] exsm:text-[0.875rem] tab:text-[1.01rem] tracking-[0.875px] leading-[1.125rem] font-bold">
           {singlePlayer ? message : player}

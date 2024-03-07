@@ -4,6 +4,7 @@ import oLine from "../assets/icon-o-outline.svg";
 import xLine from "../assets/icon-x-outline.svg";
 import xdark from "../assets/icon-x-dark.svg";
 import odark from "../assets/icon-o-dark.svg";
+import { motion } from "framer-motion";
 
 type Player = "X" | "O";
 type Board = Player | null;
@@ -71,10 +72,33 @@ export default function Square({
     }
   }
 
+  const imgVariants = {
+    initial: {
+      opacity: 0,
+      scale: 0,
+    },
+    animate: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        ease: "easeInOut",
+        duration: 0.3,
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 1,
+      transition: {
+        ease: "easeOut",
+        duration: 0.3,
+      },
+    },
+  };
+
   return (
     <div
       onClick={() => handleClick(index)}
-      className={` group  grid place-items-center rounded-[15px] ${
+      className={` group transition-all duration-300 ease-in  grid place-items-center rounded-[15px] ${
         winner && winArray?.includes(index) && winner !== "Draw"
           ? board[index] === "X"
             ? "bg-light-blue"
@@ -83,13 +107,23 @@ export default function Square({
       } pb-2 shadow-pick cursor-pointer size-[26.5vw] tab:size-[140px]`}
     >
       {winner && winArray?.includes(index) && winner !== "Draw" ? (
-        <img
+        <motion.img
+          key="hello"
+          variants={imgVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
           src={board[index] === "X" ? xdark : odark}
           alt="x or o image"
           className=" size-[3.1rem] exsm:size-[4rem] "
         />
       ) : board[index] ? (
-        <img
+        <motion.img
+          key="git"
+          variants={imgVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
           src={board[index] === "X" ? xIcon : oIcon}
           alt="x or o image"
           className=" size-[3.1rem] exsm:size-[4rem] "
