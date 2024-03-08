@@ -87,7 +87,7 @@ function App() {
       y: -100,
       transition: {
         ease: "easeOut",
-        duration: 1,
+        duration: 0.5,
       },
     },
   };
@@ -102,7 +102,7 @@ function App() {
       y: 0,
       transition: {
         ease: "easeInOut",
-        duration: 1,
+        duration: 0.5,
       },
     },
     exit: {
@@ -160,45 +160,45 @@ function App() {
           )}
         </AnimatePresence>
       </div>
-      {modal && (
-        <div className="w-full absolute top-0 h-full">
-          {modal === "restart" && (
-            <RestartUi
-              setModal={setModal}
-              setBoard={setBoard}
-              dispatch={dispatch}
-            />
-          )}
-          {modal === "tie" && (
-            <TieCard
-              player1={player1}
-              setBoard={setBoard}
-              dispatch={dispatch}
-              setPlayer1={setPlayer1}
-              setLevel={setLevel}
-              setHomePage={setHomePage}
-              setModal={setModal}
-              setWinner={setWinner}
-              setPlayer2={setPlayer2}
-            />
-          )}
-          {modal !== "restart" && modal !== "tie" && (
-            <WinCard
-              setPlayer2={setPlayer2}
-              singlePlayer={singlePlayerMode}
-              player1={player1}
-              winner={winner}
-              setBoard={setBoard}
-              dispatch={dispatch}
-              setPlayer1={setPlayer1}
-              setLevel={setLevel}
-              setHomePage={setHomePage}
-              setModal={setModal}
-              setWinner={setWinner}
-            />
-          )}
-        </div>
-      )}
+      <AnimatePresence>
+        {modal && (
+          <motion.div className="w-full absolute top-0 h-full">
+            {modal === "restart" ? (
+              <RestartUi
+                setModal={setModal}
+                setBoard={setBoard}
+                dispatch={dispatch}
+              />
+            ) : modal === "tie" ? (
+              <TieCard
+                player1={player1}
+                setBoard={setBoard}
+                dispatch={dispatch}
+                setPlayer1={setPlayer1}
+                setLevel={setLevel}
+                setHomePage={setHomePage}
+                setModal={setModal}
+                setWinner={setWinner}
+                setPlayer2={setPlayer2}
+              />
+            ) : modal !== "restart" && modal !== "tie" ? (
+              <WinCard
+                setPlayer2={setPlayer2}
+                singlePlayer={singlePlayerMode}
+                player1={player1}
+                winner={winner}
+                setBoard={setBoard}
+                dispatch={dispatch}
+                setPlayer1={setPlayer1}
+                setLevel={setLevel}
+                setHomePage={setHomePage}
+                setModal={setModal}
+                setWinner={setWinner}
+              />
+            ) : null}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

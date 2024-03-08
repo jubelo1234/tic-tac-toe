@@ -132,7 +132,7 @@ export default function Square({
         <img
           src={curPlayer === "X" ? xLine : oLine}
           alt="x or o image"
-          className=" hidden lg:group-hover:block size-[3.1rem] exsm:size-[4rem] "
+          className=" hidden transition-all duration-300 ease-in lg:group-hover:block size-[3.1rem] exsm:size-[4rem] "
         />
       )}
     </div>
