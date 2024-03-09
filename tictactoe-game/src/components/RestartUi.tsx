@@ -132,7 +132,7 @@ export default function RestartUi({
           initial="initial"
           animate="animate"
           exit="initial"
-          className="z-10 fixed h-[16.625rem] flex flex-col justify-center items-center uppercase bg-semi-dark-navy w-full top-1/2 left-1/2  transform -translate-y-1/2 -translate-x-1/2"
+          className="z-10 absolute h-[16.625rem] flex flex-col justify-center items-center uppercase bg-semi-dark-navy w-full top-1/2 left-1/2  transform -translate-y-1/2 -translate-x-1/2"
         >
           <div className="overflow-hidden">
             <motion.p
