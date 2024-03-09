@@ -116,7 +116,7 @@ function App() {
 
   return (
     <>
-      <div className="px-[6vw] py-10 flex items-center justify-center bg-dark-navy min-h-screen min-w-screen">
+      <div className="px-[6vw] pt-6 pb-10 flex items-center justify-center bg-dark-navy min-h-screen min-w-screen">
         <AnimatePresence mode="wait">
           {homePage ? (
             <motion.div
