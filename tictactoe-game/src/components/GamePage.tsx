@@ -50,7 +50,7 @@ export default function GamePage({
     singlePlayer ? player1 + " (you)" : player1 + " (P1)"
   }`;
   const player2Title = `${
-    singlePlayer ? player2 + " (cpu)" : player2 + " (P2)"
+    singlePlayer ? player2 + " (AI)" : player2 + " (P2)"
   }`;
   const tieTitle = "tie";
 
@@ -254,137 +254,23 @@ export default function GamePage({
         </button>
       </div>
       <div className="mt-[4rem] tab:mt-[2rem] space-y-[1.25rem]">
-        <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={0}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={1}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={2}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-        </div>
-        <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={3}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={4}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={5}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-        </div>
-        <div className="flex items-center justify-between gap-[3vw] tab:gap-[15px]">
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={6}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={7}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
-          <Square
-            setScores={setScores}
-            winArray={winArray}
-            winner={winner}
-            setWinner={setWinner}
-            checkWinner={checkWinner}
-            player1={player1}
-            singlePlayer={singlePlayer}
-            index={8}
-            board={board}
-            setBoard={setBoard}
-            curPlayer={currentPlayer}
-            setCurPlayer={setCurrentPlayer}
-          />
+        <div className="grid grid-cols-3 gap-[3vw] tab:gap-[15px]">
+          {[...Array(9)].map((_, index) => (
+            <Square
+              setScores={setScores}
+              winArray={winArray}
+              winner={winner}
+              setWinner={setWinner}
+              checkWinner={checkWinner}
+              player1={player1}
+              singlePlayer={singlePlayer}
+              index={index}
+              board={board}
+              setBoard={setBoard}
+              curPlayer={currentPlayer}
+              setCurPlayer={setCurrentPlayer}
+            />
+          ))}
         </div>
       </div>
       <div className="flex items-center justify-between gap-[3vw] mt-[1.19rem] tab:gap-[15px]">

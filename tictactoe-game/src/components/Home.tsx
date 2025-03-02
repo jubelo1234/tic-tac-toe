@@ -11,14 +11,18 @@ type homeProps = {
   setPage: React.Dispatch<React.SetStateAction<boolean>>;
   singlePlayer: React.Dispatch<React.SetStateAction<boolean>>;
   level: string;
-  setLevel: React.Dispatch<React.SetStateAction<string>>
+  setLevel: React.Dispatch<React.SetStateAction<string>>;
   player1: "X" | "O";
 };
 
-export default function Home({ playerOne, setPage, singlePlayer, level, setLevel, player1 }: homeProps) {
-
-
-
+export default function Home({
+  playerOne,
+  setPage,
+  singlePlayer,
+  level,
+  setLevel,
+  player1,
+}: homeProps) {
   function handleSinglePlayer(): void {
     setPage(false);
     singlePlayer(true);
@@ -29,7 +33,7 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
     singlePlayer(false);
   }
 
-  function handleLevel(e: React.MouseEvent<HTMLButtonElement>): void{
+  function handleLevel(e: React.MouseEvent<HTMLButtonElement>): void {
     setLevel(e.currentTarget.value);
   }
 
@@ -50,10 +54,8 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
     return () => clearTimeout(timeoutId);
   }, [player1]);
 
-
-
   return (
-    <motion.div  className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
+    <motion.div className="w-full max-w-[550px] tab:max-w-[460px] mx-auto">
       <div className="w-full flex items-center justify-center">
         <img src={logo} alt="logo" className="h-[2rem]" />
       </div>
@@ -61,7 +63,7 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
         <h2 className=" text-[0.9rem] exsm:text-[1rem] font-bold tracking-[1px] text-silver-cl">
           Pick player 1's mark
         </h2>
-        <div className="h-[4.5rem] relative mt-[0.5rem] w-full flex items-center rounded-[0.625rem] bg-dark-navy justify-center">
+        <div className="h-[4.5rem] relative mt-[0.5rem] w-full flex items-center rounded-[16px] bg-dark-navy justify-center">
           <button
             onClick={() => playerOne("X")}
             className=" cursor-pointer relative z-10 w-1/2 flex items-center justify-center"
@@ -77,32 +79,36 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
           <div
             className={`bg-silver-cl transition-transform duration-500 ease-in-out z-0 top-1/2 transform -translate-y-1/2 ${
               player1 === "O" ? "translate-x-[50%]" : "-translate-x-[50%]"
-            } absolute rounded-[0.625rem] `}
+            } absolute rounded-[8px] `}
             style={{ width: "calc(50% - 0.5rem", height: "calc(100% - 1rem)" }}
           ></div>
         </div>
         <h2 className=" text-[0.9rem] mt-[1rem] exsm:text-[1rem] font-bold tracking-[1px] text-silver-cl">
           Difficulty Selection
         </h2>
-        <div className="h-[4.5rem] relative  mt-[0.5rem] w-full flex items-center rounded-[0.625rem] bg-dark-navy justify-center">
+        <div className="h-[4.5rem] relative  mt-[0.5rem] w-full flex items-center rounded-[16px] bg-dark-navy justify-center">
           <button
             onClick={handleLevel}
             value={"easy"}
-            className={` cursor-pointer font-extrabold text-[42px] transition-colors duration-500 ease-in-out relative z-10 w-1/2 flex ${level === "hard" ? " text-silver-cl": " text-dark-navy"} items-center justify-center`}
+            className={` cursor-pointer font-extrabold text-[42px] transition-colors duration-500 ease-in-out relative z-10 w-1/2 flex ${
+              level === "hard" ? " text-silver-cl" : " text-dark-navy"
+            } items-center justify-center`}
           >
             1
           </button>
           <button
             onClick={handleLevel}
             value={"hard"}
-            className={`w-1/2 cursor-pointer font-extrabold text-[42px] transition-colors duration-500 ease-in-out ${level === "easy" ? " text-silver-cl": " text-dark-navy"} relative z-10 flex items-center justify-center`}
+            className={`w-1/2 cursor-pointer font-extrabold text-[42px] transition-colors duration-500 ease-in-out ${
+              level === "easy" ? " text-silver-cl" : " text-dark-navy"
+            } relative z-10 flex items-center justify-center`}
           >
             2
           </button>
           <div
             className={`bg-silver-cl transition-transform duration-500 ease-in-out z-0 top-1/2 transform -translate-y-1/2 ${
               level === "hard" ? "translate-x-[50%]" : "-translate-x-[50%]"
-            } absolute rounded-[0.625rem] `}
+            } absolute rounded-[8px] `}
             style={{ width: "calc(50% - 0.5rem", height: "calc(100% - 1rem)" }}
           ></div>
         </div>
@@ -116,7 +122,7 @@ export default function Home({ playerOne, setPage, singlePlayer, level, setLevel
           className="w-full shadow-vcp uppercase h-[3.5rem] tab:h-[4.1875rem] text-center px-1 bg-light-yellow transition-all duration-300 hover:bg-light-yellow-hover text-[0.9rem] exsm:text-[1rem] tab:text-[20px] font-bold text-dark-navy tracking-[1.25px] rounded-[0.9375rem] cursor-pointer"
         >
           {" "}
-          new game (vs cpu)
+          new game (vs AI)
         </button>
         <button
           onClick={handleMultiPlayer}
