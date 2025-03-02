@@ -84,7 +84,7 @@ export default function Home({
           ></div>
         </div>
         <h2 className=" text-[0.9rem] mt-[1rem] exsm:text-[1rem] font-bold tracking-[1px] text-silver-cl">
-          Difficulty Selection
+        Difficulty Level
         </h2>
         <div className="h-[4.5rem] relative  mt-[0.5rem] w-full flex items-center rounded-[16px] bg-dark-navy justify-center">
           <button
